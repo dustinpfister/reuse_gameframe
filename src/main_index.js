@@ -14,6 +14,7 @@ class Boot extends Phaser.Scene {
         this.key = 'Boot';
     }
     create () {
+        const scene = this;
         const disp = this.add.text(10, 10, '', {  });
         const push_text = (disp, result, store='RMC') => {
             disp.text += 'store: ' + store + '\n';
@@ -23,12 +24,35 @@ class Boot extends Phaser.Scene {
             });
             disp.text += '\n\n';
         }
-        get()
-        .then((result)=>{
-            console.log( result );
-            push_text(disp, result, 'RMC');
-            push_text(disp, result, 'IRC');
-        });
+        
+        
+        game.registry.set('PULL_LT', new Date(0) );
+        game.registry.set('PULL_DELAY', 15000 );
+        
+        game.events.on('step', function() {
+            const scenes = game.scene.getScenes(true, false) || [] ;
+            const scene_current = scenes[0];
+            const date_lp = game.registry.get('PULL_LT');
+            const date_now = new Date();
+            const ms = date_now - date_lp;
+            if(scene_current && ms >= game.registry.get('PULL_DELAY') ){
+                game.registry.set('PULL_LT', date_now);        
+                get()
+                .then((result)=>{
+                    disp.text = '';
+                    push_text(disp, result, 'RMC');
+                    push_text(disp, result, 'IRC');
+                    
+                    console.log('new pull for: ' + date_now);
+                    console.log('RMC pricing: ' + result.RMC.tb['Total Pricing ($)']);
+                    console.log('IRC pricing: ' + result.IRC.tb['Total Pricing ($)']);
+                    console.log('');
+                    
+                });
+                
+            }
+        }, scene);
+        
     }
 };
 const config = {
