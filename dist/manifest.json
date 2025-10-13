@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "version": "0.0",
+  "name": "Reuse Data1 GameFrame",
+  "description": "A Game FrameWork for data1 at Finger Lakes Reuse",
+  "content_scripts": [
+    {
+      "js": [
+        "index.js"
+      ],
+      "matches": [
+        "https://data1.ithacareuse.org/pricing/portal/RMC/",
+        "https://data1.ithacareuse.org/pricing/portal/IRC/"
+      ]
+    }
+  ],
+  "permissions": [
+    "scripting",
+    "storage",
+    "activeTab"
+  ]
+}
