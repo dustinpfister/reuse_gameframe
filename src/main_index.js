@@ -16,6 +16,7 @@ class Boot extends Phaser.Scene {
     create () {
         const scene = this;
         const disp = this.add.text(10, 10, '', {  });
+        
         const push_text = (disp, result, store='RMC') => {
             disp.text += 'store: ' + store + '\n';
             Object.keys( result[store].tb ).forEach((key) => {
@@ -23,7 +24,15 @@ class Boot extends Phaser.Scene {
                 disp.text += key + ': ' + n + '\n' ;
             });
             disp.text += '\n\n';
-        }
+        };
+        
+        const get_price_per = ( result, store='RMC', avg=6531.76) => {
+            const pricing = result[store].tb['Total Pricing ($)'];
+            let per = pricing / ( avg * 2 );
+            per = per < 0 ? 0 : per;
+            per = per > 1 ? 1 : per;
+            return parseFloat( per.toFixed(2) );
+        };
         
         
         game.registry.set('PULL_LT', new Date(0) );
@@ -46,6 +55,7 @@ class Boot extends Phaser.Scene {
                     console.log('new pull for: ' + date_now);
                     console.log('RMC pricing: ' + result.RMC.tb['Total Pricing ($)']);
                     console.log('IRC pricing: ' + result.IRC.tb['Total Pricing ($)']);
+                    console.log('RMC per: ' + get_price_per(result, 'RMC') + ', IRC per: ' + get_price_per(result, 'IRC') );
                     console.log('');
                     
                 });

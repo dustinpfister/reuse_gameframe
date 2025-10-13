@@ -1,5 +1,10 @@
 # Finger Lakes Reuse GameFrame
 
+RMC = 2769314.05 / 365 = 7587.16;
+IRC = 1998875.80 / 365 = 5476.37;
+
+( 7587.16 + 5476.37 ) / 2 = 6531.76;
+
 ## pending for current
 * have a starting form of a 'ROM'
 
