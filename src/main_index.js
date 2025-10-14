@@ -26,6 +26,31 @@ const get_price_per = ( result, store='RMC', avg=6531.76) => {
     per = per > 1 ? 1 : per;
     return parseFloat( per.toFixed(2) );
 };
+const draw_meter = (ctx, result, store='RMC') => {
+    const i = store === 'RMC' ? 0 : 1;
+    const sy = 128 * i;
+    const per = get_price_per(result, store);
+    ctx.fillStyle = 'gray';
+    ctx.fillRect(0, sy, 256, 128);
+    
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = 'white';
+    ctx.beginPath();
+    ctx.moveTo(128 - 50, sy + 96);
+    ctx.arc(128, sy + 96, 50, Math.PI, Math.PI * 2.0, false);
+    ctx.stroke();
+    
+    ctx.lineWidth = 8;
+    let pro_color = 'red';
+    if(per > 0.25){ pro_color = 'orange';}
+    if(per > 0.50){ pro_color = 'lime';}
+    ctx.strokeStyle = pro_color;
+    ctx.beginPath();
+    ctx.moveTo(128 - 50, sy + 96);
+    ctx.arc(128, sy + 96, 50, Math.PI, Math.PI * (1 + per), false);
+    ctx.stroke();
+    
+}
 const Rom = {
 
     create: ( Rom, scene ) => {
@@ -39,18 +64,24 @@ const Rom = {
         texture.add(1, 0, 0, 128, 256, 128);
         scene.add.sprite(128 + 320, 64 + 20, 'meter', 0);
         scene.add.sprite(128 + 320, 64 + 20 + 128 + 20, 'meter', 1);
-        Rom.draw(Rom, scene);
+        //Rom.draw(Rom, scene);
     },
     
-    draw: (Rom, scene) => {
+    draw: (Rom, scene, result) => {
         const texture = scene.registry.get('texture');
         const ctx = texture.context;
-        let r = Math.floor( Math.random() * 3 );
-        ctx.fillStyle = 'red,blue,green'.split(',').slice(r, r + 1);
-        ctx.fillRect(0,   0, 256, 128);
-        r = Math.floor( Math.random() * 3 );
-        ctx.fillStyle = 'yellow,white,orange'.split(',').slice(r, r + 1);
-        ctx.fillRect(0, 128, 256, 128);
+        
+        draw_meter(ctx, result, 'RMC');
+        draw_meter(ctx, result, 'IRC');
+        
+        //let r = Math.floor( Math.random() * 3 );
+        //ctx.fillStyle = 'red,blue,green'.split(',').slice(r, r + 1);
+        //ctx.fillRect(0,   0, 256, 128);
+        //r = Math.floor( Math.random() * 3 );
+        //ctx.fillStyle = 'yellow,white,orange'.split(',').slice(r, r + 1);
+        //ctx.fillRect(0, 128, 256, 128);
+        
+        
         texture.refresh();
     },
     
@@ -64,9 +95,9 @@ const Rom = {
         console.log('new pull for: ' + date_now);
         console.log('RMC pricing: ' + result.RMC.tb['Total Pricing ($)']);
         console.log('IRC pricing: ' + result.IRC.tb['Total Pricing ($)']);
-        console.log('RMC per: ' + get_price_per(result, 'RMC') + ', IRC per: ' + get_price_per(result, 'IRC') );
+        //console.log('RMC per: ' + get_price_per(result, 'RMC') + ', IRC per: ' + get_price_per(result, 'IRC') );
         console.log('');
-        Rom.draw(Rom, scene);
+        Rom.draw(Rom, scene, result);
     }
 
 }
