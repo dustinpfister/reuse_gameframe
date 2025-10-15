@@ -15,8 +15,10 @@ const get_tb_data = ( html='' ) => {
     const arr_value = html_clean.match(patt3);
     return arr_desc.filter( ( str ) => {
         return str != 'TBD';
-    }).reduce((acc, str, i)=>{
-        acc[ str ] = parseFloat(arr_value[i].replace('$', ''));
+    }).reduce((acc, str, i) => {
+        let n = parseFloat( arr_value[i].replace('$', '') );
+        n = String(n) === 'NaN' ? 0 : n;
+        acc[ str ] = n;
         return acc;
     }, {});
 };
