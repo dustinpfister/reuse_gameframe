@@ -8,6 +8,7 @@ IRC = 1998875.80 / 365 = 5476.37;
 
 
 ## R0 () - Core Idea of Project working
+* A rom extends Phaser.Scene
 * have a starting form of a 'ROM'
 * automate the process of getting up to date stats from data1
 * get\_production\_data.js module started that can be used to get current production data

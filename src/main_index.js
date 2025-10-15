@@ -51,56 +51,48 @@ const draw_meter = (ctx, result, store='RMC') => {
     ctx.stroke();
     
 }
-const Rom = {
+class Rom extends Phaser.Scene {
 
-    create: ( Rom, scene ) => {
+    constructor (scene) {
+        super(scene);
+        this.key = 'Rom';
+    }
+
+    create ( ) {
+        const scene = this;
         const disp = scene.add.text(10, 10, '', {  });
         scene.game.registry.set('disp', disp);
         const texture = scene.textures.createCanvas('meter', 256, 256);
         scene.registry.set('texture', texture);
-        // add frames
-        // name, sourceIndex, x, y, w, h
-        texture.add(0, 0, 0,   0, 256, 128);
+        texture.add(0, 0, 0,   0, 256, 128); // name, sourceIndex, x, y, w, h
         texture.add(1, 0, 0, 128, 256, 128);
         scene.add.sprite(128 + 320, 64 + 20, 'meter', 0);
         scene.add.sprite(128 + 320, 64 + 20 + 128 + 20, 'meter', 1);
-        //Rom.draw(Rom, scene);
-    },
+    }
     
-    draw: (Rom, scene, result) => {
+    draw (result) {
+        const scene = this;
         const texture = scene.registry.get('texture');
         const ctx = texture.context;
-        
         draw_meter(ctx, result, 'RMC');
         draw_meter(ctx, result, 'IRC');
-        
-        //let r = Math.floor( Math.random() * 3 );
-        //ctx.fillStyle = 'red,blue,green'.split(',').slice(r, r + 1);
-        //ctx.fillRect(0,   0, 256, 128);
-        //r = Math.floor( Math.random() * 3 );
-        //ctx.fillStyle = 'yellow,white,orange'.split(',').slice(r, r + 1);
-        //ctx.fillRect(0, 128, 256, 128);
-        
-        
         texture.refresh();
-    },
+    }
     
-    pull: (Rom, scene, result, date_now) => {
-    
+    pull (result, date_now ) {
+        const scene = this;
         const disp = scene.game.registry.get('disp');    
         disp.text = '';
         push_text(disp, result, 'RMC');
         push_text(disp, result, 'IRC');
-                    
         console.log('new pull for: ' + date_now);
         console.log('RMC pricing: ' + result.RMC.tb['Total Pricing ($)']);
         console.log('IRC pricing: ' + result.IRC.tb['Total Pricing ($)']);
-        //console.log('RMC per: ' + get_price_per(result, 'RMC') + ', IRC per: ' + get_price_per(result, 'IRC') );
         console.log('');
-        Rom.draw(Rom, scene, result);
+        this.draw(result);
     }
-
-}
+    
+};
 
 
 class Boot extends Phaser.Scene {
@@ -111,15 +103,15 @@ class Boot extends Phaser.Scene {
     create () {
         const scene = this;
         const game = scene.game;
-        
-        Rom.create(Rom, scene);
-        
-  
-
-        
+            
+        //Rom.create(Rom, scene);
+        //const rom = scene.add();
+        scene.scene.add('Rom', Rom, false);
         
         game.registry.set('PULL_LT', new Date(0) );
         game.registry.set('PULL_DELAY', 15000 );
+        //game.registry.set('rom', rom);
+        
         
         game.events.on('step', function() {
             const scenes = game.scene.getScenes(true, false) || [] ;
@@ -131,13 +123,17 @@ class Boot extends Phaser.Scene {
                 game.registry.set('PULL_LT', date_now);        
                 get()
                 .then((result)=>{
-                    
-                    Rom.pull(Rom, scene, result, date_now);
+                
+                    const rom = scene.scene.get('Rom');
+                    rom.pull(result, date_now);
+                    console.log(result);
                     
                 });
                 
             }
         }, scene);
+        
+        scene.scene.start('Rom');
         
     }
 };
