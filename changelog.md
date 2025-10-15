@@ -5,7 +5,10 @@ IRC = 1998875.80 / 365 = 5476.37;
 ( 7587.16 + 5476.37 ) / 2 = 6531.76;
 
 ## pending for current
-
+* a Rom should have an update method
+* the draw method should be called in the update method of the rom
+* the latest pull result should be part of the registry state
+* have a pull history array rather than just a single object.
 
 ## R0 () - Core Idea of Project working
 * A rom extends Phaser.Scene
