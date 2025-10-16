@@ -29,6 +29,7 @@ console.log( atob(compressed) );   // 'so then this is my test string but it wil
 * a pull result contains data for the current logged in user.
 
 ## RX () - external file format
+* start a parseRom method
 * external rom file format for starting 'meter' rom
 * rollup script builds external meter.rom.js in a rom folder that is a child of dist
 
