@@ -28,9 +28,11 @@ console.log( atob(compressed) );   // 'so then this is my test string but it wil
 * have a pull history array rather than just a single object.
 * a pull result contains data for the current logged in user.
 
-## pending changes
+## RX () - external file format
 * external rom file format for starting 'meter' rom
 * rollup script builds external meter.rom.js in a rom folder that is a child of dist
+
+## pending changes
 
 ## R0 () - Core Idea of Project working
 * have a starting form of a 'ROM'

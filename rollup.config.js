@@ -53,4 +53,14 @@ export default [
 	        format: 'iife'
 	    }
     }
+    /*
+    {
+	    input: 'src/rom_meter.js',
+	    output: {
+	        file: 'dist/roms/meter.rom.js',
+	        name: 'Rom',
+	        format: 'iife'
+	    }
+    }
+    */
 ];
