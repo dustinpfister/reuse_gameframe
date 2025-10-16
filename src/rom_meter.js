@@ -1,6 +1,8 @@
+import * as Phaser from './phaser.esm.js';
 /********* **********
-'meter' ROM file for Reuse GameFrame project
+'meter' ROM PROTOTYPE
 ********** *********/
+
 const push_text = (disp, result, store='RMC') => {
     disp.text += 'store: ' + store + '\n';
     Object.keys( result[store].tb ).forEach((key) => {
@@ -41,8 +43,14 @@ const draw_meter = (ctx, result, store='RMC') => {
     ctx.stroke();
     
 }
-const Rom = {
-    create: function( ) {
+class Rom extends Phaser.Scene {
+
+    constructor (scene) {
+        super(scene);
+        this.key = 'Rom';
+    }
+
+    create ( ) {
         const scene = this;
         const disp = scene.add.text(10, 10, '', {  });
         scene.game.registry.set('disp', disp);
@@ -52,8 +60,9 @@ const Rom = {
         texture.add(1, 0, 0, 128, 256, 128);
         scene.add.sprite(128 + 320, 64 + 20, 'meter', 0);
         scene.add.sprite(128 + 320, 64 + 20 + 128 + 20, 'meter', 1);
-    },
-    draw: function( ) {
+    }
+    
+    draw () {
         const scene = this;
         const disp = scene.game.registry.get('disp');
         const result = scene.game.registry.get('pull_result');
@@ -65,20 +74,27 @@ const Rom = {
         disp.text = '';
         push_text(disp, result, 'RMC');
         push_text(disp, result, 'IRC');
+
         draw_meter(ctx, result, 'RMC');
         draw_meter(ctx, result, 'IRC');
         texture.refresh();
-    },
-    pull: function( result, date_now ) {
+    }
+    
+    pull ( result, date_now ) {
         const scene = this;
+        console.log('');
         console.log('new pull for: ' + date_now);
         console.log('RMC pricing: ' + result.RMC.tb['Total Pricing ($)']);
         console.log('IRC pricing: ' + result.IRC.tb['Total Pricing ($)']);
         console.log('');
-    },
-    update: function( ) {
+        console.log('');
+    }
+    
+    update () {
         this.draw();
     }
+    
 };
 
-export { Rom }
+export { Rom };
+
