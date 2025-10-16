@@ -70,26 +70,34 @@ class Rom extends Phaser.Scene {
         scene.add.sprite(128 + 320, 64 + 20 + 128 + 20, 'meter', 1);
     }
     
-    draw (result) {
+    draw () {
         const scene = this;
+        const disp = scene.game.registry.get('disp');
+        const result = scene.game.registry.get('pull_result');
         const texture = scene.registry.get('texture');
         const ctx = texture.context;
+        if(!result){
+            return
+        }
+        disp.text = '';
+        push_text(disp, result, 'RMC');
+        push_text(disp, result, 'IRC');
+
         draw_meter(ctx, result, 'RMC');
         draw_meter(ctx, result, 'IRC');
         texture.refresh();
     }
     
-    pull (result, date_now ) {
+    pull ( result, date_now ) {
         const scene = this;
-        const disp = scene.game.registry.get('disp');    
-        disp.text = '';
-        push_text(disp, result, 'RMC');
-        push_text(disp, result, 'IRC');
         console.log('new pull for: ' + date_now);
         console.log('RMC pricing: ' + result.RMC.tb['Total Pricing ($)']);
         console.log('IRC pricing: ' + result.IRC.tb['Total Pricing ($)']);
         console.log('');
-        this.draw(result);
+    }
+    
+    update () {
+        this.draw();
     }
     
 };
@@ -103,16 +111,10 @@ class Boot extends Phaser.Scene {
     create () {
         const scene = this;
         const game = scene.game;
-            
-        //Rom.create(Rom, scene);
-        //const rom = scene.add();
         scene.scene.add('Rom', Rom, false);
-        
         game.registry.set('PULL_LT', new Date(0) );
         game.registry.set('PULL_DELAY', 15000 );
-        //game.registry.set('rom', rom);
-        
-        
+        game.registry.set('pull_result', null);
         game.events.on('step', function() {
             const scenes = game.scene.getScenes(true, false) || [] ;
             const scene_current = scenes[0];
@@ -122,19 +124,15 @@ class Boot extends Phaser.Scene {
             if(scene_current && ms >= game.registry.get('PULL_DELAY') ){
                 game.registry.set('PULL_LT', date_now);        
                 get()
-                .then((result)=>{
-                
+                .then((pull_result)=>{
                     const rom = scene.scene.get('Rom');
-                    rom.pull(result, date_now);
-                    console.log(result);
-                    
+                    game.registry.set('pull_result', pull_result);
+                    rom.pull(pull_result, date_now);
+                    console.log(pull_result);
                 });
-                
             }
         }, scene);
-        
         scene.scene.start('Rom');
-        
     }
 };
 const config = {
