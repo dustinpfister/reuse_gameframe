@@ -22,11 +22,7 @@ class Boot extends Phaser.Scene {
         const game = scene.game;
         const scenePlugin = scene.scene;
         const sceneManager = scenePlugin.manager;
-        
-        console.log(scene, game, scenePlugin, sceneManager);
-        
         scenePlugin.add('Rom', Rom, false);
-        
         game.registry.set('PULL_LT', new Date(0) );
         game.registry.set('PULL_DELAY', 15000 );
         game.registry.set('pull_result', null);

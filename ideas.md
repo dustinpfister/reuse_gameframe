@@ -1,10 +1,14 @@
 # Finger Lakes Reuse GameFrame - ideas for future revisions
 
-## RX ()
+## RX () - avg daily dollar amount between stores
 
+Have an average amount of money for a single day, between both stores.
+
+```
 RMC = 2769314.05 / 365 = 7587.16;
 IRC = 1998875.80 / 365 = 5476.37;
 ( 7587.16 + 5476.37 ) / 2 = 6531.76;
+```
 
 ## RX () - String Compression
 I would like to encode image assets, and data in general, into a single text ROM file. However doing so will

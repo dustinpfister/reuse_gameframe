@@ -9,3 +9,10 @@ Things are going to be a little tricky when it comes to designing the ROMS for t
 * Be interesting enough to get people engaged with the game.
 * Not be so interesting that it negatively impacts production, and other work actual work duties.
 * Should have very little or no user input \( zero player game \) 
+
+## Project History
+
+## R0  - Core Idea of Project working
+
+With R0 the goal was just to quickly get the core idea of the framework, and a single test Rom working on top of it called just simply 'meter'. So far so good, but there is a great deal more work to get done with this. One thing that I do not have finalized at this point is a standard for how the roms will exist.
+
