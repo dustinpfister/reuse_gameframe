@@ -1,7 +1,4 @@
 import * as Phaser from './phaser.esm.js';
-/********* **********
-'meter' ROM PROTOTYPE
-********** *********/
 
 const push_text = (disp, result, store='RMC') => {
     disp.text += 'store: ' + store + '\n';

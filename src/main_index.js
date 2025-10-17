@@ -20,8 +20,12 @@ class Boot extends Phaser.Scene {
     create () {
         const scene = this;
         const game = scene.game;
+        const scenePlugin = scene.scene;
+        const sceneManager = scenePlugin.manager;
         
-        scene.scene.add('Rom', Rom, false);
+        console.log(scene, game, scenePlugin, sceneManager);
+        
+        scenePlugin.add('Rom', Rom, false);
         
         game.registry.set('PULL_LT', new Date(0) );
         game.registry.set('PULL_DELAY', 15000 );
@@ -39,12 +43,6 @@ class Boot extends Phaser.Scene {
                     const rom = scene.scene.get('Rom');
                     game.registry.set('pull_result', pull_result);
                     rom.pull(pull_result, date_now);
-                    
-                    console.log(scene.scene.manager.getScene('Rom'));
-                    
-                    //console.log( game.scene.getScenes(false) );
-                    //console.log( game.scene.getScene('Rom') );
-                    //console.log(pull_result);
                 });
             }
         }, scene);
