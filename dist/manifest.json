@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.0",
+  "version": "0.1",
   "name": "Reuse Data1 GameFrame",
   "description": "A Game FrameWork for data1 at Finger Lakes Reuse",
   "content_scripts": [

@@ -1,5 +1,26 @@
 # Finger Lakes Reuse GameFrame - ideas for future revisions
 
+## Rx () - external rom file ( as string ) format?
+
+I was thinking that it would be nice to have a rom file format where everything is packaged as a string. This includes images, audio, and code. However I ran into problems.
+
+Although I was able to get a rom to load in one of my test\_phaser repo projects. I was not able to get this working in a chrome extension, likely because of security concerns when it comes to code injection attacks. Still there should be a fair use way of doing something like this. Maybe there is a way to do this by using the chrome extension scripting api?
+
+```
+const rom_str = 'class Rom extends Phaser.Scene {constructor (scene) { super(scene);this.key = \'Rom\';}create ( ) {}draw () {}pull ( result, date_now ) {}update () {}};export { Rom };';
+
+const LoadRomString = (rom_str='') => {
+    const dataUrl = `data:text/javascript,${encodeURIComponent(rom_str)}`;
+    return import(dataUrl)
+    .then((module)=>{
+        if(!module.Rom){
+            return Promise.reject('No Rom export found in given rom string.');
+        }
+        return module.Rom;
+    });
+};
+```
+
 ## RX () - avg daily dollar amount between stores
 
 Have an average amount of money for a single day, between both stores.
@@ -30,9 +51,5 @@ console.log( atob(compressed) );   // 'so then this is my test string but it wil
 
 ## RX () - pull history
 * have a pull history array rather than just a single object.
-* a pull result contains data for the current logged in user.
 
-## RX () - external file format
-* external rom file format for starting 'meter' rom
-* rollup script builds external meter.rom.js in a rom folder that is a child of dist
 

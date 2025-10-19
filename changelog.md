@@ -2,7 +2,15 @@
 
 ## pending changes
 
-## R0 () - Core Idea of Project working
+* a pull result contains data for the current logged in user.
+* handle requests when offline
+* see about adressing 'loss of context' problem
+* external rom file format for starting 'meter' rom
+* rollup script builds external meter.rom.js in a rom folder that is a child of dist
+
+## R1 ( ) - User data in result object 
+
+## R0 ( done 10/17/2025 ) - Core Idea of Project working
 * have a starting form of a 'ROM'
 * A Rom extends Phaser.Scene
 * A Rom has an update method that can be used to update things on a frame by frame basis

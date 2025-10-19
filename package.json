@@ -1,6 +1,6 @@
 {
   "name": "reuse_gameframe",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A chrome extension that provides a game framework of sorts for data1 at Finger Lakes Reuse",
   "main": "index.js",
   "scripts": {

@@ -12,7 +12,7 @@ Things are going to be a little tricky when it comes to designing the ROMS for t
 
 ## Project History
 
-## R0  - Core Idea of Project working
+## R0  ( done 10/17/2025 ) - Core Idea of Project working
 
 With R0 the goal was just to quickly get the core idea of the framework, and a single test Rom working on top of it called just simply 'meter'. So far so good, but there is a great deal more work to get done with this. One thing that I do not have finalized at this point is a standard for how the roms will exist.
 
